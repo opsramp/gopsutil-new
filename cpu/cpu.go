@@ -44,6 +44,8 @@ type InfoStat struct {
 	CacheSize  int32    `json:"cacheSize"`
 	Flags      []string `json:"flags"`
 	Microcode  string   `json:"microcode"`
+	NumberOfCores      string    `json:"numberofcores"`
+	DataWidth      string    `json:"datawidth"`
 }
 
 type lastPercent struct {
