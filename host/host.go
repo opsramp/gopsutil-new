@@ -29,7 +29,7 @@ type InfoStat struct {
 	VirtualizationSystem string `json:"virtualizationSystem"`
 	VirtualizationRole   string `json:"virtualizationRole"` // guest or host
 	HostID               string `json:"hostId"`             // ex: uuid
-	
+
 }
 
 type UserStat struct {
@@ -132,7 +132,7 @@ func Users() ([]UserStat, error) {
 	return UsersWithContext(context.Background())
 }
 
-func PlatformInformation() (string, string, string, error) {
+func PlatformInformation() (string, string, string, string, error) {
 	return PlatformInformationWithContext(context.Background())
 }
 

@@ -78,6 +78,9 @@ type VirtualMemoryStat struct {
 	HugePagesRsvd  uint64 `json:"hugePagesRsvd"`
 	HugePagesSurp  uint64 `json:"hugePagesSurp"`
 	HugePageSize   uint64 `json:"hugePageSize"`
+	//opsramp specific uses
+	TotalVir     uint64 `json:"totalVir"`
+	AvailableVir uint64 `json:"availableVir"`
 }
 
 type SwapMemoryStat struct {

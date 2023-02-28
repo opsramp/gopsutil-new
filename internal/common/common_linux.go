@@ -252,7 +252,7 @@ func VirtualizationWithContext(ctx context.Context) (string, string, error) {
 	}
 
 	if PathExists(HostEtc("os-release")) {
-		p, _, err := GetOSRelease()
+		p, _, _, err := GetOSRelease()
 		if err == nil && p == "coreos" {
 			system = "rkt" // Is it true?
 			role = "host"
@@ -277,10 +277,10 @@ func VirtualizationWithContext(ctx context.Context) (string, string, error) {
 	return system, role, nil
 }
 
-func GetOSRelease() (platform string, version string, err error) {
+func GetOSRelease() (platform string, version string, description string, err error) {
 	contents, err := ReadLines(HostEtc("os-release"))
 	if err != nil {
-		return "", "", nil // return empty
+		return "", "", "", nil // return empty
 	}
 	for _, line := range contents {
 		field := strings.Split(line, "=")
@@ -292,6 +292,8 @@ func GetOSRelease() (platform string, version string, err error) {
 			platform = trimQuotes(field[1])
 		case "VERSION":
 			version = trimQuotes(field[1])
+		case "PRETTY_NAME":
+			description = field[1]
 		}
 	}
 
@@ -300,7 +302,7 @@ func GetOSRelease() (platform string, version string, err error) {
 		platform = "amazon"
 	}
 
-	return platform, version, nil
+	return platform, version, description, nil
 }
 
 // Remove quotes of the source string

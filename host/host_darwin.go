@@ -91,10 +91,6 @@ func UsersWithContext(ctx context.Context) ([]UserStat, error) {
 	return ret, nil
 }
 
-func PlatformInformation() (platform string, family string, version string, description string, err error) {
-	return PlatformInformationWithContext(context.Background())
-}
-
 func PlatformInformationWithContext(ctx context.Context) (string, string, string, string, error) {
 	platform := ""
 	family := ""
@@ -105,7 +101,7 @@ func PlatformInformationWithContext(ctx context.Context) (string, string, string
 	if err == nil {
 		platform = strings.ToLower(p)
 	}
-	
+
 	//added by opsramp
 	out, err = invoke.CommandWithContext(ctx, sw_vers, "-productName")
 	if err == nil {
