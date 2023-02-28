@@ -91,19 +91,34 @@ func UsersWithContext(ctx context.Context) ([]UserStat, error) {
 	return ret, nil
 }
 
-func PlatformInformationWithContext(ctx context.Context) (string, string, string, error) {
+func PlatformInformationWithContext(ctx context.Context) (string, string, string, string, error) {
 	platform := ""
 	family := ""
 	pver := ""
+	description := ""
 
 	p, err := unix.Sysctl("kern.ostype")
 	if err == nil {
 		platform = strings.ToLower(p)
 	}
+	
+	//added by opsramp
+	out, err = invoke.CommandWithContext(ctx, sw_vers, "-productName")
+	if err == nil {
+		productName := strings.TrimSpace(string(out))
+		if strings.HasPrefix(productName, "Mac") {
+			productName = "macOS"
+		}
+		productName = strings.Replace(productName, "\"", "", -1)
+		description += productName
+		family = productName
+	}
 
 	out, err := invoke.CommandWithContext(ctx, "sw_vers", "-productVersion")
 	if err == nil {
 		pver = strings.ToLower(strings.TrimSpace(string(out)))
+		pver = strings.Replace(pver, "\"", "", -1)
+		description += " " + pver
 	}
 
 	// check if the macos server version file exists
@@ -116,7 +131,7 @@ func PlatformInformationWithContext(ctx context.Context) (string, string, string
 		family = "Server"
 	}
 
-	return platform, family, pver, nil
+	return platform, family, pver, description, nil
 }
 
 func VirtualizationWithContext(ctx context.Context) (string, string, error) {
