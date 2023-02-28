@@ -291,6 +291,10 @@ func InfoWithContext(ctx context.Context) ([]InfoStat, error) {
 			c.PhysicalID = value
 		case "core id":
 			c.CoreID = value
+		case "cpu cores":
+			c.NumberOfCores = value
+		case "clflush size":
+			c.DataWidth = value
 		case "flags", "Features":
 			c.Flags = strings.FieldsFunc(value, func(r rune) bool {
 				return r == ',' || r == ' '
