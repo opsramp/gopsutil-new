@@ -29,6 +29,7 @@ type InfoStat struct {
 	VirtualizationSystem string `json:"virtualizationSystem"`
 	VirtualizationRole   string `json:"virtualizationRole"` // guest or host
 	HostID               string `json:"hostId"`             // ex: uuid
+	
 }
 
 type UserStat struct {
@@ -75,7 +76,7 @@ func InfoWithContext(ctx context.Context) (*InfoStat, error) {
 		return nil, err
 	}
 
-	ret.Platform, ret.PlatformFamily, ret.PlatformVersion, err = PlatformInformationWithContext(ctx)
+	ret.Platform, ret.PlatformFamily, ret.PlatformVersion, _, err = PlatformInformationWithContext(ctx)
 	if err != nil && !errors.Is(err, common.ErrNotImplementedError) {
 		return nil, err
 	}
