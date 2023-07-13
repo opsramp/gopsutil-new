@@ -115,7 +115,7 @@ func PartitionsWithContext(ctx context.Context, all bool) ([]PartitionStat, erro
 				}
 				// 2: DRIVE_REMOVABLE 3: DRIVE_FIXED 4: DRIVE_REMOTE 5: DRIVE_CDROM
 
-				if typeret == 2 || typeret == 3 || typeret == 4 || typeret == 5 {
+				//if typeret == 2 || typeret == 3 || typeret == 4 || typeret == 5 {
 				if typeret == 3 {
 					lpVolumeNameBuffer := make([]byte, 256)
 					lpVolumeSerialNumber := int64(0)
