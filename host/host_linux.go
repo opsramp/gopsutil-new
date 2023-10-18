@@ -167,13 +167,13 @@ func getlsbStruct(ctx context.Context) (*lsbStruct, error) {
 			}
 			switch strings.TrimSpace(field[0]) {
 			case "Distributor ID":
-				ret.ID = strings.ReplaceAll(field[1], `"`, ``)
+				ret.ID = strings.TrimSpace(strings.ReplaceAll(field[1], `"`, ``))
 			case "Release":
-				ret.Release = strings.ReplaceAll(field[1], `"`, ``)
+				ret.Release = strings.TrimSpace(strings.ReplaceAll(field[1], `"`, ``))
 			case "Codename":
-				ret.Codename = strings.ReplaceAll(field[1], `"`, ``)
+				ret.Codename = strings.TrimSpace(strings.ReplaceAll(field[1], `"`, ``))
 			case "Description":
-				ret.Description = strings.ReplaceAll(field[1], `"`, ``)
+				ret.Description = strings.TrimSpace(strings.ReplaceAll(field[1], `"`, ``))
 			}
 		}
 

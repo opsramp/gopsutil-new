@@ -104,7 +104,7 @@ func PlatformInformationWithContext(ctx context.Context) (string, string, string
 	}
 
 	//added by opsramp
-	out, err = invoke.CommandWithContext(ctx, sw_vers, "-productName")
+	out, err := invoke.CommandWithContext(ctx, "sw_vers", "-productName")
 	if err == nil {
 		productName := strings.TrimSpace(string(out))
 		if strings.HasPrefix(productName, "Mac") {
@@ -115,7 +115,7 @@ func PlatformInformationWithContext(ctx context.Context) (string, string, string
 		family = productName
 	}
 
-	out, err := invoke.CommandWithContext(ctx, "sw_vers", "-productVersion")
+	out, err = invoke.CommandWithContext(ctx, "sw_vers", "-productVersion")
 	if err == nil {
 		pver = strings.ToLower(strings.TrimSpace(string(out)))
 		pver = strings.Replace(pver, "\"", "", -1)
