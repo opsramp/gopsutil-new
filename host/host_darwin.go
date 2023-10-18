@@ -8,14 +8,15 @@ import (
 	"context"
 	"encoding/binary"
 	"errors"
-	"io/ioutil"
+	"io"
 	"os"
 	"strings"
 	"unsafe"
 
+	"golang.org/x/sys/unix"
+
 	"github.com/shirou/gopsutil/v3/internal/common"
 	"github.com/shirou/gopsutil/v3/process"
-	"golang.org/x/sys/unix"
 )
 
 // from utmpx.h
@@ -58,7 +59,7 @@ func UsersWithContext(ctx context.Context) ([]UserStat, error) {
 	}
 	defer file.Close()
 
-	buf, err := ioutil.ReadAll(file)
+	buf, err := io.ReadAll(file)
 	if err != nil {
 		return ret, err
 	}
@@ -103,7 +104,7 @@ func PlatformInformationWithContext(ctx context.Context) (string, string, string
 	}
 
 	//added by opsramp
-	out, err = invoke.CommandWithContext(ctx, sw_vers, "-productName")
+	out, err := invoke.CommandWithContext(ctx, "sw_vers", "-productName")
 	if err == nil {
 		productName := strings.TrimSpace(string(out))
 		if strings.HasPrefix(productName, "Mac") {
@@ -114,7 +115,7 @@ func PlatformInformationWithContext(ctx context.Context) (string, string, string
 		family = productName
 	}
 
-	out, err := invoke.CommandWithContext(ctx, "sw_vers", "-productVersion")
+	out, err = invoke.CommandWithContext(ctx, "sw_vers", "-productVersion")
 	if err == nil {
 		pver = strings.ToLower(strings.TrimSpace(string(out)))
 		pver = strings.Replace(pver, "\"", "", -1)
